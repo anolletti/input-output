@@ -177,7 +177,11 @@ input[type="radio"] {
 }
 
 @media all and (min-width:0px) and (max-width: 800px) {
-  p i {
+  p {
+    color: black;
+}
+  
+    i {
     color: black;
 }
   
