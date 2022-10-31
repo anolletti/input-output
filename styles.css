@@ -15,9 +15,7 @@ h1 {
   margin-bottom: 1rem;
 }
 
-a {
-  color: black;
-}
+
 
 #btn-main {
   width: 70%;
@@ -86,6 +84,9 @@ a {
   #scatterPlot {
     width: auto;
   }
+  p {
+    color: black;
+  }
 }
 
 .active {
@@ -111,11 +112,6 @@ a {
 
 p {
   display: inline-block;
-  color: black;
-}
-
-p:active {
-  color: white;
 }
 
 .btns {
