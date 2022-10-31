@@ -110,6 +110,11 @@ a {
 
 p {
   display: inline-block;
+  color: black;
+}
+
+p:selected {
+  color: white;
 }
 
 .btns {
