@@ -26,6 +26,7 @@ a {
   background-color: #ffcd4c;
   opacity: 0.6;
   filter: alpha(opacity=60);
+  color: black;
 }
 
 #btn-main:hover {
@@ -113,7 +114,7 @@ p {
   color: black;
 }
 
-p:selected {
+p:active {
   color: white;
 }
 
