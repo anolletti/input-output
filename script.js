@@ -162,7 +162,7 @@ function setDifficulty() {
     bValue = 0;
     operation1 = "multiply";
     operation2 = addOrSubtract();
-    document.getElementById("subtractLabel").classList.add("disabled");
+    document.getElementById("subtractLabel2").classList.add("disabled");
     document.getElementById("addLabel").classList.add("disabled");
     document.getElementById("b-value-guess").disabled = true;
   }
