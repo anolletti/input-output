@@ -15,8 +15,6 @@ h1 {
   margin-bottom: 1rem;
 }
 
-
-
 #btn-main {
   width: 70%;
   font-size: 4vh;
@@ -24,7 +22,6 @@ h1 {
   background-color: #ffcd4c;
   opacity: 0.6;
   filter: alpha(opacity=60);
-  color: black;
 }
 
 #btn-main:hover {
@@ -84,7 +81,6 @@ h1 {
   #scatterPlot {
     width: auto;
   }
-
 }
 
 .active {
