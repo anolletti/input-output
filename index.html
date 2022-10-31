@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title lang="en">Input-Output Machine</title>
+    <title lang="fr">Machine d'entrée-sortie</title>
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
+    <!-- Bootstrap CSS Stylesheet -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;800&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.plot.ly/plotly-2.14.0.min.js"></script>
+  </head>
+  <!-- Font Awesome -->
+  <script
+    src="https://kit.fontawesome.com/083c33e49e.js"
+    crossorigin="anonymous"
+  ></script>
+
+  <body>
+    <div id="overlay">
+      <button type="button" class="close" id="close-overlay" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <div id="overlay-text" lang="en">Congratulations!</div>
+      <div id="overlay-text" lang="fr">Félicitations !</div>
+
+      <img src="images/confetti.png" id="overlay-image" />
+    </div>
+    <div class="row h-100">
+      <div class="col-12 my-auto">
+        <!-- Main Button -->
+        <div class="row row-cols-xs-2 row-cols-md-4">
+          <div class="col">
+            <button
+              type="button"
+              class="btn btn-block btns p-3"
+              id="instructions-button"
+              data-toggle="modal"
+              data-target="#instructionsModal"
+            >
+              <i class="fa-solid fa-book"></i>
+              <p lang="en" class="my-auto">HOW-TO</p>
+              <p lang="fr" class="my-auto">MODE D'EMPLOI</p>
+            </button>
+          </div>
+
+          <div class="col">
+            <button
+              type="button"
+              class="btn btn-block btns p-3 mb-2"
+              id="graph-button"
+              data-toggle="modal"
+              data-target="#graphModal"
+            >
+              <i class="fa-solid fa-chart-line"></i>
+              <p lang="en" class="my-auto">GRAPH</p>
+              <p lang="fr" class="my-auto">GRAPHIQUE</p>
+            </button>
+          </div>
+
+          <div class="col">
+            <button
+              type="button"
+              class="btn btn-block btns p-3 mb-2"
+              id="settings-button"
+              data-toggle="modal"
+              data-target="#settingsModal"
+            >
+              <i class="fa-solid fa-gear"></i>
+              <p lang="en" class="my-auto">SETTINGS</p>
+              <p lang="fr" class="my-auto">RÉGLAGES</p>
+            </button>
+          </div>
+
+          <div class="col">
+            <button
+              type="button"
+              class="btn btn-block btns p-3 mb-2"
+              id="restart-button"
+            >
+              <i class="fa-solid fa-arrows-rotate"></i>
+              <p lang="en" class="my-auto">RESTART</p>
+              <p lang="fr" class="my-auto">REDÉMARRER</p>
+            </button>
+          </div>
+        </div>
+
+        <!-- Center Components -->
+
+        <div
+          class="row inner-console m-2 m-sm-4 text-center align-items-center"
+        >
+          <div class="col-sm-8">
+            <div class="container-fluid">
+              <div class="row align-items-center">
+                <div class="col-4">
+                  <div class="text-center" id="input-container">
+                    <h1 class="in-out-text" lang="en">IN</h1>
+                    <h1 class="in-out-text" lang="fr">ENTRÉE</h1>
+                    <div id="user-input-div">
+                      <input
+                        class="form-control form-control-lg user-field"
+                        type="number"
+                        name="user-input-value"
+                        id="user-input-value"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-4 text-center">
+                  <img
+                    src="images/robot.png"
+                    alt="Robot"
+                    class="img-fluid"
+                    id="robot-image"
+                  />
+                </div>
+
+                <div class="col-4">
+                  <div class="text-center" id="output-container">
+                    <h1 class="in-out-text" lang="en">OUT</h1>
+                    <h1 class="in-out-text" lang="fr">SORTIE</h1>
+                    <input
+                      class="form-control form-control-lg user-field"
+                      type="number"
+                      name="output-value"
+                      id="output-value"
+                      disabled
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Table of values -->
+          <div class="col-sm-4">
+            <div class="m-0 m-sm-4">
+              <table class="table table-hover mt-3 mt-sm-0">
+                <thead>
+                  <tr>
+                    <th scope="col" class="table-active" lang="en">IN</th>
+                    <th scope="col" class="table-active" lang="fr">ENTRÉE</th>
+                    <th scope="col" class="table-active" lang="en">OUT</th>
+                    <th scope="col" class="table-active" lang="fr">SORTIE</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr id="row0">
+                    <td id="input0">
+                      <i class="fa-regular fa-square fa-l"></i>
+                    </td>
+                    <td id="output0">
+                      <i class="fa-regular fa-square fa-l"></i>
+                    </td>
+                  </tr>
+                  <tr id="row1">
+                    <td id="input1">
+                      <i class="fa-regular fa-square fa-l"></i>
+                    </td>
+                    <td id="output1">
+                      <i class="fa-regular fa-square fa-l"></i>
+                    </td>
+                  </tr>
+                  <tr id="row2">
+                    <td id="input2">
+                      <i class="fa-regular fa-square fa-l"></i>
+                    </td>
+                    <td id="output2">
+                      <i class="fa-regular fa-square fa-l"></i>
+                    </td>
+                  </tr>
+                  <tr id="row3">
+                    <td id="input3">
+                      <i class="fa-regular fa-square fa-l"></i>
+                    </td>
+                    <td id="output3">
+                      <i class="fa-regular fa-square fa-l"></i>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Button Components -->
+        <div class="col-12 d-flex justify-content-center">
+          <button
+            type="button"
+            class="btn btns p-2 m-1"
+            data-toggle="modal"
+            data-target="#guessModal"
+            id="btn-main"
+            lang="en"
+          >
+            WHAT'S THE RULE?
+          </button>
+          <button
+            type="button"
+            class="btn btns p-2 m-1"
+            data-toggle="modal"
+            data-target="#guessModal"
+            id="btn-main"
+            lang="fr"
+          >
+            QUELLE EST LA RÈGLE ?
+          </button>
+        </div>
+
+        <!--Here-->
+      </div>
+    </div>
+
+    <!-- Custom Modal -->
+
+    <div
+      class="modal fade"
+      id="customModal"
+      style="z-index: 10000"
+      role="dialog"
+      aria-labelledby="customModalLabel"
+      aria-hidden="true"
+      data-backdrop="static"
+      data-keyboard="false"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header text-center">
+            <h5 class="modal-title" id="customModalLabel" lang="en">
+              Create-a-Rule
+            </h5>
+            <h5 class="modal-title" id="customModalLabel" lang="fr">
+              Crééz une règle
+            </h5>
+          </div>
+
+          <div class="modal-body">
+            <form id="customForm">
+              <div class="container-fluid">
+                <div class="row align-items-center">
+                  <!-- Multiply or Divide -->
+
+                  <div class="col-md-3 align-content-center text-center">
+                    <div class="btn-group-vertical" data-toggle="buttons">
+                      <label
+                        class="btn btn-outline-dark"
+                        id="multiplyLabelCustom"
+                      >
+                        <input
+                          type="radio"
+                          name="operation1custom"
+                          id="multiplyCustom"
+                          value="multiply"
+                        /><i
+                          class="fa-solid fa-xmark fa-fw fa-xl"
+                          aria-hidden="true"
+                        ></i>
+                        <p class="my-auto" lang="en">Multiply by</p>
+                        <p class="my-auto" lang="fr">On multiplie par</p>
+                      </label>
+                      <label
+                        class="btn btn-outline-dark"
+                        id="divideLabelCustom"
+                      >
+                        <input
+                          type="radio"
+                          name="operation1custom"
+                          id="divideCustom"
+                          value="divide"
+                        /><i
+                          class="fa-solid fa-divide fa-fw fa-xl"
+                          aria-hidden="true"
+                        ></i>
+                        <p class="my-auto" lang="en">Divide by</p>
+                        <p class="my-auto" lang="fr">On divise par</p>
+                      </label>
+                    </div>
+                  </div>
+                  <!-- Multiply or divide by -->
+                  <div class="col-md-3">
+                    <input
+                      class="user-field user-field2"
+                      type="number"
+                      id="mValueCustom"
+                      name="m-value-custom"
+                    />
+                  </div>
+                  <!-- Add or subtract -->
+                  <div class="col-md-3 align-content-center text-center">
+                    <div class="btn-group-vertical" data-toggle="buttons">
+                      <label class="btn btn-outline-dark" id="addLabelCustom">
+                        <input
+                          type="radio"
+                          name="operation2custom"
+                          id="addCustom"
+                          value="add"
+                        /><i
+                          class="fa-solid fa-plus fa-fw fa-xl"
+                          aria-hidden="true"
+                        ></i>
+                        <p class="my-auto" lang="en">then add</p>
+                        <p class="my-auto" lang="fr">ensuite additionne</p>
+                      </label>
+                      <label class="btn btn-outline-dark" id="subtractLabel">
+                        <input
+                          type="radio"
+                          name="operation2custom"
+                          id="subtractCustom"
+                          value="subtract"
+                        /><i
+                          class="fa-solid fa-minus fa-fw fa-xl"
+                          aria-hidden="true"
+                        ></i>
+                        <p class="my-auto" lang="en">then subtract</p>
+                        <p class="my-auto" lang="fr">ensuite soustrait</p>
+                      </label>
+                    </div>
+                  </div>
+
+                  <!-- Add or subtract by  -->
+
+                  <div class="col-md-3">
+                    <input
+                      class="user-field user-field2"
+                      type="number"
+                      id="bValueCustom"
+                      name="quantityCustom"
+                    />
+                  </div>
+                </div>
+              </div>
+            </form>
+            <br />
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              id="customRuleCancel"
+            >
+              <i class="fa-solid fa-xmark"></i>
+              <p class="my-auto" lang="en">Cancel</p>
+              <p class="my-auto" lang="fr">Annuler</p>
+            </button>
+            <button type="button" class="btn btn-primary" id="customRuleSubmit">
+              <i class="fa-solid fa-check"></i>
+              <p class="my-auto" lang="en">Submit</p>
+              <p class="my-auto" lang="fr">Soumettre</p>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!---Graph Modal-->
+
+    <div
+      class="modal fade"
+      id="graphModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="graphModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header text-center">
+            <h5 class="modal-title w-100" id="graphModalLabel" lang="en">
+              Graph
+            </h5>
+            <h5 class="modal-title w-100" id="graphModalLabel" lang="fr">
+              Graphique
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-12">
+                  <div id="scatterPlot"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-outline-danger"
+              data-dismiss="modal"
+              lang="en"
+            >
+              <i class="fa-solid fa-xmark"></i> Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-danger"
+              data-dismiss="modal"
+              lang="fr"
+            >
+              <i class="fa-solid fa-xmark"></i> Fermer
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Guess Modal -->
+    <div
+      class="modal fade"
+      id="guessModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="guessModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header text-center">
+            <h5 class="modal-title" id="guessModalLabel" lang="en">
+              Do you know the rule?
+            </h5>
+            <h5 class="modal-title" id="guessModalLabel" lang="fr">
+              Savez-vous la règle d'entrée et sortie ?
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div class="modal-body">
+            <form id="guessForm">
+              <div class="container-fluid">
+                <div class="row align-items-center">
+                  <!-- Multiply or Divide -->
+
+                  <div class="col-md-3 align-content-center text-center">
+                    <div class="btn-group-vertical" data-toggle="buttons">
+                      <label class="btn btn-outline-dark" id="multiplyLabel">
+                        <input
+                          type="radio"
+                          name="operation1"
+                          id="multiply"
+                          value="multiply"
+                        /><i
+                          class="fa-solid fa-xmark fa-fw fa-xl"
+                          aria-hidden="true"
+                        ></i>
+                        <p class="my-auto" lang="en">Multiply by</p>
+                        <p class="my-auto" lang="fr">On multiplie par</p>
+                      </label>
+                      <label class="btn btn-outline-dark" id="divideLabel">
+                        <input
+                          type="radio"
+                          name="operation1"
+                          id="divide"
+                          value="divide"
+                        /><i
+                          class="fa-solid fa-divide fa-fw fa-xl"
+                          aria-hidden="true"
+                        ></i>
+                        <p class="my-auto" lang="en">Divide by</p>
+                        <p class="my-auto" lang="fr">On divise par</p>
+                      </label>
+                    </div>
+                  </div>
+                  <!-- Multiply or divide by -->
+                  <div class="col-md-3">
+                    <input
+                      class="user-field user-field2"
+                      type="number"
+                      id="m-value-guess"
+                      name="quantity"
+                    />
+                  </div>
+                  <!-- Add or subtract -->
+                  <div class="col-md-3 align-content-center text-center">
+                    <div class="btn-group-vertical" data-toggle="buttons">
+                      <label class="btn btn-outline-dark" id="addLabel">
+                        <input
+                          type="radio"
+                          name="operation2"
+                          id="add"
+                          value="add"
+                        /><i
+                          class="fa-solid fa-plus fa-fw fa-xl"
+                          aria-hidden="true"
+                        ></i>
+                        <p class="my-auto" lang="en">then add</p>
+                        <p class="my-auto" lang="fr">ensuite additionne</p>
+                      </label>
+                      <label class="btn btn-outline-dark" id="subtractLabel">
+                        <input
+                          type="radio"
+                          name="operation2"
+                          id="subtract"
+                          value="subtract"
+                        /><i
+                          class="fa-solid fa-minus fa-fw fa-xl"
+                          aria-hidden="true"
+                        ></i>
+                        <p class="my-auto" lang="en">then subtract</p>
+                        <p class="my-auto" lang="fr">ensuite soustrait</p>
+                      </label>
+                    </div>
+                  </div>
+
+                  <!-- Add or subtract by  -->
+
+                  <div class="col-md-3">
+                    <input
+                      class="user-field user-field2"
+                      type="number"
+                      id="b-value-guess"
+                      name="quantity"
+                    />
+                  </div>
+                </div>
+              </div>
+            </form>
+            <br />
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              <i class="fa-solid fa-xmark"></i>
+              <p class="my-auto" lang="en">close</p>
+              <p class="my-auto" lang="fr">fermer</p>
+            </button>
+            <button type="button" class="btn btn-primary" id="checkAnswer">
+              <i class="fa-solid fa-check"></i>
+              <p class="my-auto" lang="en">Check Answer</p>
+              <p class="my-auto" lang="fr">Vérifier ma réponse</p>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div
+      class="modal fade"
+      id="settingsModal"
+      role="dialog"
+      aria-labelledby="settingsModalLabel"
+      aria-hidden="true"
+      data-backdrop="static"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header text-center">
+            <h5 class="modal-title w-100" id="settingsModalLabel"></h5>
+          </div>
+          <div class="modal-body align-content-center text-center p-3">
+            <h5 lang="en">Select your difficulty level</h5>
+            <h5 lang="fr">Selectionnez votre niveau de difficulté</h5>
+            <div class="btn-group" data-toggle="buttons">
+              <label class="btn btn-outline-dark" id="custom-label">
+                <input
+                  type="radio"
+                  name="level"
+                  checked="checked"
+                  id="custom"
+                  value="custom"
+                  required
+                />
+                <p class="my-auto" lang="en">Custom</p>
+                <p class="my-auto" lang="fr">Manuel</p>
+              </label>
+              <label class="btn btn-outline-dark active" id="beginner-label">
+                <input
+                  type="radio"
+                  name="level"
+                  checked="checked"
+                  id="beginner"
+                  value="beginner"
+                  required
+                />
+                <p class="my-auto">1</p>
+              </label>
+
+              <label class="btn btn-outline-dark">
+                <input
+                  type="radio"
+                  name="level"
+                  id="novice"
+                  value="novice"
+                  required
+                />
+                <p class="my-auto">2</p>
+              </label>
+
+              <label class="btn btn-outline-dark">
+                <input
+                  type="radio"
+                  name="level"
+                  id="intermediate"
+                  value="intermediate"
+                  required
+                />
+                <p class="my-auto">3</p>
+              </label>
+              <label class="btn btn-outline-dark">
+                <input
+                  type="radio"
+                  name="level"
+                  id="advanced"
+                  value="advanced"
+                  required
+                />
+                <p class="my-auto">4</p>
+              </label>
+            </div>
+
+            <br />
+
+            <h5 lang="en" class="mt-3">Language</h5>
+            <h5 lang="fr" class="mt-3">Langue</h5>
+            <div class="btn-group" data-toggle="buttons">
+              <label class="btn btn-outline-dark active">
+                <input
+                  type="radio"
+                  id="en"
+                  name="language"
+                  checked="checked"
+                  value="en"
+                  required
+                />
+                <p class="my-auto">🇬🇧 EN</p>
+              </label>
+              <label class="btn btn-outline-dark">
+                <input
+                  type="radio"
+                  name="language"
+                  id="fr"
+                  value="fr"
+                  required
+                />
+                <p class="my-auto">🇫🇷 FR</p>
+              </label>
+            </div>
+
+            <br />
+
+            <h5 class="mt-3">Audio</h5>
+
+            <div class="btn-group" data-toggle="buttons">
+              <label class="btn btn-outline-dark active">
+                <input
+                  type="radio"
+                  id="on"
+                  name="audio"
+                  checked="checked"
+                  required
+                />
+                <p class="my-auto">🔊 ON</p>
+              </label>
+              <label class="btn btn-outline-dark">
+                <input type="radio" name="audio" id="off" required />
+                <p class="my-auto">🔇 OFF</p>
+              </label>
+            </div>
+
+            <br />
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-primary"
+              id="set-level"
+              data-dismiss="modal"
+            >
+              <i class="fa-solid fa-circle-play"></i>
+              <p class="my-auto">PLAY</p>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Insstructions Modal -->
+    <div
+      class="modal fade"
+      id="instructionsModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="instructionsModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header text-center">
+            <h5 class="modal-title w-100" id="instructionsModalLabel" lang="en">
+              How-To
+            </h5>
+            <h5 class="modal-title w-100" id="instructionsModalLabel" lang="fr">
+              Mode d'emploi
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <ol class="list-group list-group-numbered align-text-left">
+              <li class="list-group-item" lang="en">
+                1. Enter an input value.
+              </li>
+              <li class="list-group-item" lang="fr">
+                1. Entrez un nombre d'entrée.
+              </li>
+              <li class="list-group-item" lang="en">
+                2. Click on the robot or ENTER.
+              </li>
+              <li class="list-group-item" lang="fr">
+                2. Cliquez sur le robot ou peser la touche Entrée.
+              </li>
+              <li class="list-group-item" lang="en">
+                3. The robot will transform your number into a new number. This
+                is called the output value.
+              </li>
+              <li class="list-group-item" lang="fr">
+                3. Le robot transforme les nombres d'entrées. Ce nombre
+                s'appelle le nombre de sortie.
+              </li>
+
+              <li class="list-group-item" lang="en">
+                4. Continue entering input values until you know the robot's
+                transformation rule.
+              </li>
+              <li class="list-group-item" lang="fr">
+                4. Entrez plus de nombre d'entrée jusqu'à ce que vous ayez
+                déterminer la règle d'entrée et sortie du robot.
+              </li>
+            </ol>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary">
+              <a
+                href="lessonplan.pdf"
+                class="btn btn-secondary"
+                role="button"
+                lang="en"
+                target="_blank"
+              >
+                <i class="fa-solid fa-chalkboard-user"></i>
+                Lesson Plan
+              </a>
+              <a
+                href="planpédagogique.pdf"
+                class="btn btn-secondary"
+                role="button"
+                lang="fr"
+                target="_blank"
+              >
+                <i class="fa-solid fa-chalkboard-user"></i>
+                Plan pédagogique
+              </a>
+            </button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">
+              <i class="fa-solid fa-thumbs-up"></i>
+              <p class="my-auto" lang="en">I UNDERSTAND</p>
+              <p class="my-auto" lang="fr">J'AI COMPRIS</p>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

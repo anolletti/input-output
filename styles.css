@@ -1,0 +1,177 @@
+body {
+  font-family: "Nunito", sans-serif;
+  height: 100vh;
+  background-image: linear-gradient(to top left, #753682 0%, #bf2e34 100%);
+  margin-right: 8%;
+  margin-left: 8%;
+}
+
+h1 {
+  position: relative;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  word-spacing: 2px;
+  font-weight: 300;
+  margin-bottom: 1rem;
+}
+
+#btn-main {
+  width: 70%;
+  font-size: 4vh;
+  font-weight: bolder;
+  background-color: #ffcd4c;
+  opacity: 0.6;
+  filter: alpha(opacity=60);
+}
+
+#btn-main:hover {
+  opacity: 0.9;
+  filter: alpha(opacity=90);
+}
+
+#output-value {
+  background: rgba(0, 0, 0, 0);
+  border: 2px solid black;
+}
+
+#overlay {
+  text-align: center;
+  align-items: center;
+  position: fixed; /* Sit on top of the page content */
+  display: none;
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+  z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+  cursor: pointer; /* Add a pointer on hover */
+}
+
+#overlay-image {
+  max-height: 70%;
+  max-width: 70%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  z-index: -1;
+}
+
+#overlay-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 10vw;
+  color: white;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+
+#scatterPlot {
+  width: 100vw;
+  position: flex;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  #scatterPlot {
+    width: auto;
+  }
+}
+
+.active {
+  background-color: #5a5a5a;
+  color: white;
+}
+
+.in-out-text {
+  position: relative;
+  text-align: center;
+  font-size: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  word-spacing: 2px;
+  margin-bottom: 1rem;
+}
+
+.modal-title {
+  color: #c7365f;
+  font-size: 3vh;
+  font-weight: 500;
+}
+
+p {
+  display: inline-block;
+}
+
+.btns {
+  background-color: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  border-radius: 50rem;
+  border: 2px solid black;
+  font-size: 2vh;
+  white-space: normal;
+  height: 100%;
+  text-align: center;
+  justify-content: center;
+}
+
+.btns:hover {
+  background-color: white;
+  color: black;
+  outline: none;
+}
+
+.hidden {
+  display: none;
+}
+
+.inner-console {
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 9px;
+  color: #333;
+  padding: 2%;
+  margin: auto;
+  outline: 4px;
+  backdrop-filter: blur(200px);
+  filter: blur();
+  box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.25);
+}
+
+.table thead th {
+  font-size: 1rem;
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+  text-align: center;
+}
+
+.table tbody tr {
+  font-size: 1.2rem;
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+  text-align: center;
+}
+
+.user-field {
+  display: inline-block;
+  text-align: center;
+  font-size: 5.5vw;
+  font-weight: 300;
+  color: #c7365f !important;
+  margin: 5%;
+  width: 85%;
+  padding: 2%;
+}
+
+.user-field2 {
+  font-size: 5vw;
+  width: 90%;
+}
+
+input[type="radio"] {
+  display: none;
+}
