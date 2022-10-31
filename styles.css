@@ -175,3 +175,13 @@ p {
 input[type="radio"] {
   display: none;
 }
+
+@media all and (min-width:0px) and (max-width: 800px) {
+  p i {
+    color: black;
+}
+  
+ #btn-main {
+   color: black;
+  }
+  
