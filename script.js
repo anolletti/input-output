@@ -147,7 +147,7 @@ document
   });
 
 function setDifficulty() {
-  document.getElementById("subtractLabel").classList.remove("disabled");
+  document.getElementById("subtractLabel2").classList.remove("disabled");
   document.getElementById("addLabel").classList.remove("disabled");
   document.getElementById("b-value-guess").disabled = false;
 
