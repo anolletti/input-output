@@ -305,6 +305,25 @@ robotButton.addEventListener("click", myMove);
 
 //Graphing
 
+// Translater
+
+function translate(word) {
+  let translatedWord;
+  language = checkLanguage();
+  if (language == "fr") {
+    if (word == "INPUT VALUES") {
+      translatedWord = "Nombres d'entrée";
+    }
+    if (word == "OUTPUT VALUES") {
+      translatedWord = "Nombres de sortie";
+    }
+  }
+  if (language == "en" || language == null) {
+    translatedWord = word;
+  }
+  return translatedWord;
+}
+
 // We need graph to be traced on click of button
 function drawGraph() {
   var trace1 = {
@@ -320,7 +339,7 @@ function drawGraph() {
   var layout = {
     xaxis: {
       title: {
-        text: "INPUT VALUES",
+        text: `${translate("INPUT VALUES")}`,
         dtick: 1,
         font: {
           size: 18,
@@ -330,7 +349,7 @@ function drawGraph() {
     },
     yaxis: {
       title: {
-        text: "OUTPUT VALUES",
+        text: `${translate("OUTPUT VALUES")}`,
         dtick: 1,
         font: {
           size: 18,
