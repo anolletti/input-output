@@ -269,6 +269,9 @@ var id = null;
 function myMove() {
   // Setting user input value to animation
   let inputValue = inputField.value;
+  if (inputField.value == "") {
+    return false;
+  }
   inputField.value = "";
 
   // Playing audio

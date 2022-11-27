@@ -177,16 +177,21 @@ input[type="radio"] {
   display: none;
 }
 
-@media all and (min-width:0px) and (max-width: 800px) {
+@media (max-width: 1199.98px) {
   p {
     color: black;
-}
-  
-    i {
-    color: black;
-}
-  
- #btn-main {
-   color: black;
   }
-  
+
+  i {
+    color: black;
+  }
+
+  #btn-main {
+    color: black;
+    font-size: 2.5vh;
+  }
+
+  .btns {
+    height: 80%;
+  }
+}
